@@ -34,8 +34,27 @@ d. 创建本地新bugfix分支修改
 		如果你的本地提交很多，一定要版本变成一个
 		可以用git squash （https://www.cnblogs.com/hzglearn/p/13042282.html） 
                1. git rebase -i HEAD~5 取最近5个commit提交。
-			   2. 第一行不许动，倒数的几个没提交的commit把头上的pick单词改成字母s，最后一个你想保留的提交保持pick不能改成s。
-			       ：wq保存，会自动进入commit历史修改。
+			   2. 第一行不许动，倒数的几个没提交的commit把头上的pick单词改成squash，最后一个你想保留的提交保持pick不能改成squash。
+			       ：wq保存，会自动进入commit历史修改。注意不能把第一个改掉，也不能把曾经提交上去的COMMIT擦掉！！！危险！！
+				   
+				   如：#第4个 update 4我要保留，那么改成下面这个样子即可
+				        pick edac4ab update for git operations
+						squash 988add0 update 1
+						squash 98f6c60 update 2
+						squash afac6f1 update 2
+						pick cc5273a update 4
+						
+					然后进入编辑：
+					    # This is a combination of 4 commits.
+						# This is the 1st commit message:
+						update for git operations
+
+						Signed-off-by: lyp830414 <lyp830414@163.com>
+
+						# This is the commit message #2:
+
+						update 4 --》其他的commit行删除了。
+						
 			   3. 然后 git push -f origin lyp_bugfix	 	
 		 
 		 git push -f origin lyp_bugfix
