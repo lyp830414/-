@@ -1,0 +1,164 @@
+
+1. **如何提交PA**
+
+'''
+a.fork代码到自己的git
+
+b. git clone 已经fork的代码到本地
+
+c. git remote add upstream https://github.com/apache/skywalking.git
+
+	 例如我fork的本地仓库为：https://github.com/lyp830414/Probe.git 	
+	 上游仓库为：            https://github.com/SamYuan1990/Probe.git
+
+	 则：cd 到本地clone的Probe目录。并设置此项目关联的上游GIT项目并CHECK远程提交branch。
+		 cd Probe
+		 git remote add upstream https://github.com/SamYuan1990/Probe.git	
+		 git remote -v
+
+d. 创建本地新bugfix分支修改
+         
+     改本地CODE
+		 
+		 git checkout -b lyp_bugfix
+         git add  .
+		 #第一次的提交 git commit -s -m "fix XXX issue"
+		 #第二次的提交 
+		 git commit -s -m "fix XXX issue" #这样就不会导致多个提交了
+		 
+		 git fetch usptream
+		 git rebase upstream/main
+		 
+		 
+
+		如果你的本地提交很多，一定要版本变成一个
+		可以用git squash （https://www.cnblogs.com/hzglearn/p/13042282.html） 
+               1. git rebase -i HEAD~5 取最近5个commit提交。
+			   2. 第一行不许动，倒数的几个没提交的commit把头上的pick单词改成字母s，最后一个你想保留的提交保持pick不能改成s。
+			       ：wq保存，会自动进入commit历史修改。
+			   3. 然后 git push -f origin lyp_bugfix	 	
+		 
+		 git push -f origin lyp_bugfix
+		 
+     提交到自己本地的远程分支 
+         
+		 git push -f origin lyp_bugfix 
+		
+e. 向GITHUB提交PR
+        去自己的lyp_bugfix分支。点New pull request （或者Compare & Pull request）
+	    接下来等待检查通过，等对方给你通过即可。
+		
+f.如果有问题：
+	
+   	//追加提交（不改东西不加COMMIT记录，仅修改COMMIT的HASH值）
+	 git commit -s --amend --no-edit   或者 git commit --amend --no-edit --signoff (证明commit by用户)
+	 git push -f origin lyp_bugfix
+	 
+    如果你的本地提交很多，git squash 一定要版本变成一个
+	
+f. 去GITHUB上填写Compare & pull request
+
+g. 示例
+
+[root@CentOS7-142 Probe]# git remote -v
+origin  https://github.com/lyp830414/Probe.git (fetch)
+origin  https://github.com/lyp830414/Probe.git (push)
+[root@CentOS7-142 Probe]# 
+[root@CentOS7-142 Probe]# 
+[root@CentOS7-142 Probe]# git branch -a
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+[root@CentOS7-142 Probe]# 
+[root@CentOS7-142 Probe]# git remote add upstream https://github.com/SamYuan1990/Probe.git
+[root@CentOS7-142 Probe]# git remote -v
+origin  https://github.com/lyp830414/Probe.git (fetch)
+origin  https://github.com/lyp830414/Probe.git (push)
+upstream        https://github.com/SamYuan1990/Probe.git (fetch)
+upstream        https://github.com/SamYuan1990/Probe.git (push)
+[root@CentOS7-142 Probe]# 
+[root@CentOS7-142 Probe]# git branch -a
+* main
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/main
+
+
+[修改代码 。。。。]
+
+[root@CentOS7-142 Probe]# git add .
+[root@CentOS7-142 Probe]# git commit -m ../commits.txt
+[root@CentOS7-142 Probe]# git push origin lyp_bugfix
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': lyp830414@163.com
+Password for 'https://lyp830414@163.com@github.com':
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 745 bytes | 745.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+remote:
+remote: Create a pull request for 'lyp_bugfix' on GitHub by visiting:
+remote:      https://github.com/lyp830414/Probe/pull/new/lyp_bugfix
+remote:
+To https://github.com/lyp830414/Probe.git
+ * [new branch]      lyp_bugfix -> lyp_bugfix
+[root@CentOS7-142 Probe]#
+
+
+
+[root@CentOS7-142 Probe]# git log
+
+commit dc31cee329edd54af44c0a766f05f242f98bde4d (HEAD -> lyp_bugfix, origin/lyp_bugfix)
+Author: lyp830414 <lyp830414@163.com>
+Date:   Thu Feb 4 11:43:24 2021 +0800
+
+    issue:
+            [#76] Could not get script via 'curl -vsS https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash'
+
+    solution:
+            Update README.MD & README_ZH.MD, remarking that manually download the script instead of CURL
+
+.....
+.....
+
+PS C:\working_projects\Probe> git branch
+* lyp_bugfix
+  main
+PS C:\working_projects\Probe>
+PS C:\working_projects\Probe> git remote -v
+origin  https://github.com/lyp830414/Probe.git (fetch)
+origin  https://github.com/lyp830414/Probe.git (push)
+upstream        https://github.com/SamYuan1990/Probe.git (fetch)
+upstream        https://github.com/SamYuan1990/Probe.git (push)
+PS C:\working_projects\Probe>
+PS C:\working_projects\Probe> 
+PS C:\working_projects\Probe> git fetch upstream
+PS C:\working_projects\Probe> git rebase upstream/main
+Current branch lyp_bugfix is up to date.
+PS C:\working_projects\Probe> git push origin lyp_bugfix
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com':
+PS C:\working_projects\Probe> git push -f origin lyp_bugfix
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': lyp830414
+Password for 'https://lyp830414@github.com':
+Everything up-to-date
+PS C:\working_projects\Probe> git commit -s --amend --no-edit
+[lyp_bugfix 101dc51] issue:     [#76] Could not get script via 'curl -vsS https://raw.githubusercontent.com/hyperledger/fabric/master/scripts/bootstrap.sh | bash'
+ Date: Thu Feb 4 12:37:05 2021 +0800
+ 2 files changed, 24 insertions(+), 8 deletions(-)
+PS C:\working_projects\Probe> git push -f origin lyp_bugfix
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': lyp830414
+Password for 'https://lyp830414@github.com':
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 771 bytes | 771.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/lyp830414/Probe.git
+ + 9ed5168...101dc51 lyp_bugfix -> lyp_
+'''
+
