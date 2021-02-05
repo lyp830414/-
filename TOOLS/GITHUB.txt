@@ -26,7 +26,7 @@ d. 创建本地新bugfix分支修改
 		 #第二次的提交 
 		 git commit -s -m "fix XXX issue" #这样就不会导致多个提交了
 		 
-		 git fetch usptream
+		 git fetch upstream
 		 git rebase upstream/main
 		 
 		 
