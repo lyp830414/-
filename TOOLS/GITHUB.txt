@@ -29,6 +29,9 @@ d. 创建本地新bugfix分支修改
 		 git fetch upstream
 		 git rebase upstream/main
 		 
+		 git add .
+		 git commit -s -m "xxxxxxx"
+		 git push -f origin lyp_bugfix
 		 
 
 		如果你的本地提交很多，一定要版本变成一个
