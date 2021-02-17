@@ -1,3 +1,5 @@
+1. fix go mod
+
 root@lyp-ThinkPad-E550:~/Probe/fabric-samples/asset-transfer-basic/chaincode-go# go env -w GOPROXY=https://goproxy.cn
 root@lyp-ThinkPad-E550:~/Probe/fabric-samples/asset-transfer-basic/chaincode-go# go mod vendor
 go: downloading github.com/hyperledger/fabric-contract-api-go v1.1.0
@@ -29,3 +31,9 @@ go: downloading github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
 go: downloading golang.org/x/text v0.3.2
 go: downloading github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
 root@lyp-ThinkPad-E550:~/Probe/fabric-samples/asset-transfer-basic/chaincode-go# 
+
+2. add domain into /etc/hosts
+
+127.0.0.1 peer0.org1.example.com
+127.0.0.1 peer0.org2.example.com
+127.0.0.1 orderer.example.com
